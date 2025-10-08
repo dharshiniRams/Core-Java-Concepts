@@ -1,0 +1,75 @@
+Abstraction:
+Abstraction means showing only essential features and hiding the internal details. It focuses on what an object does, not how it does it.
+Abstraction can be achieved in two ways:
+1.	Using Abstract Classes
+2.	Using Interfaces
+
+1. Abstract Class: A class declared with the keyword abstract. It can have abstract methods (without body) and non-abstract methods (with body). It cannot be instantiated (objects cannot be created directly). It is used for partial abstraction.
+Example:
+abstract class Animal {
+    abstract void sound();      
+    void sleep() {System.out.println("Sleeping");}
+}
+class Dog extends Animal {
+    void sound() {System.out.println("Bark");}
+}
+2. Interface:
+An interface is a blueprint of a class that contains abstract methods (methods without a body). It is used to achieve abstraction and multiple inheritance in Java. A class that uses an interface must implement all its methods.
+⦁	Declared using the keyword interface.
+⦁	All methods are public and abstract by default.
+⦁	A class uses the keyword implements to use an interface.
+⦁	One class can implement multiple interfaces.
+⦁	Interfaces help in loose coupling and code reusability.
+Example:
+import java.util.*;
+interface Calculator
+{
+    double add(double a, double b);
+    double sub(double a, double b);
+    double mul(double a, double b);
+    double div(double a, double b);
+}
+interface Scientific {double power(double a, double b);}
+class BasicCalculator implements Scientific,Calculator­­­
+{­­­
+    public double add(double a, double b){return a+b;}
+    public double sub(double a, double b) {return a-b;}­
+    public double mul(double a, double b) {return a*b;}
+    public double div(double a, double b){return a/b;}
+    public double power(double a, double b){ return Math.pow(a,b);}
+}
+public class App {
+    public static void main(String[] args)
+    {
+        Scanner s=new Scanner(System.in);
+        BasicCalculator app=new BasicCalculator();
+        System.out.println("Enter first Value: ");
+        double a=s.nextDouble();
+        System.out.println("Enter Second Value: ");
+        double b=s.nextDouble();
+        System.out.println("Enter Any Symbol(+,-,*,/,^): ");
+        char sys=s.next().charAt(0);
+        double ans;
+        switch(sys)
+        {
+            case '+':
+                ans=app.add(a,b);
+                System.out.println("Answer: "+ans);
+                break;
+            case '-':
+                ans=app.sub(a,b);
+                System.out.println("Answer: "+ans);
+                break;
+            case '*':
+                ans=app.mul(a,b);
+                System.out.println("Answer: "+ans);
+                break;
+            case '/':
+                ans=app.div(a,b);
+                System.out.println("Answer: "+ans);
+                break;
+            case '^':
+                ans=app.power(a,b);
+                System.out.println("Answer: "+ans);
+                break;
+}}}

@@ -1,0 +1,46 @@
+Comparable vs Comparator
+1. Comparable – “Default Way to Compare”
+Definition:
+Comparable is an interface that allows a class to define its own natural way of ordering — how its objects should be compared.
+Syntax:
+public interface Comparable<T> {
+    int compareTo(T other);
+}
+Meaning:
+If a class implements Comparable, it must define the logic in the compareTo() method that explains how one object is compared with another.
+Example:
+class Student implements Comparable<Student> {
+    int id;
+    String name;
+
+    Student(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+    public int compareTo(Student other) {
+        return this.id - other.id;
+    }
+}
+Now when you do:
+Collections.sort(studentList);
+It automatically sorts by id, because that’s the natural order defined in the class.
+2. Comparator – “Custom Way to Compare”
+Definition:
+Comparator is an interface used to write custom comparison logic outside the class — useful when you want different sorting options.
+Syntax:
+public interface Comparator<T> {
+    int compare(T o1, T o2);
+}
+Meaning:
+You can create multiple comparators for different sorting logic — for example, by name, age, or marks.
+Example (Anonymous Class):
+Comparator<Student> nameComparator = new Comparator<Student>() {
+    public int compare(Student s1, Student s2) {
+        return s1.name.compareTo(s2.name);
+    }
+};
+Example (Lambda Expression):
+Comparator<Student> nameComparator = (s1, s2) -> s1.name.compareTo(s2.name);
+Then use:
+Collections.sort(studentList, nameComparator);
+This sorts the students by name, not by id.

@@ -1,0 +1,174 @@
+1. What is Collection Framework?
+    The Java Collection Framework (JCF) is a unified architecture that provides interfaces, classes, and algorithms to store, retrieve, and manipulate groups of objects efficiently.
+        i.   To handle multiple objects easily (instead of arrays).
+        ii.  To provide ready-to-use data structures like dynamic lists, sets, queues, maps, etc.
+        iii. To provide built-in methods (add, remove, sort, search, etc.) so you don’t need to code them manually.
+2. What are all Collections in Java?
+    1. List Interface
+        i.   Ordered collection (insertion order is maintained)
+        ii.  Allows duplicate elements, which makes it different from a Set.
+        iii. Index-based access
+        -> The List interface defines many useful methods such as:
+            * add() to insert elements
+            * get() to retrieve elements by index
+            * remove() to delete elements
+            * set() to update elements
+            * size() to get the number of elements
+            * contains() to check if an element exists
+        -> Because List is an interface, you cannot create an object directly from it.
+        -> Instead, you create objects from classes that implement it — such as ArrayList, LinkedList, Vector, or Stack.
+        -> Classes:
+            1. ArrayList:
+                -> It is fast for accessing elements (because it uses indexes), but slower for insertions or deletions in the middle, since shifting of elements is required.
+                syntax: List<data-type> names = new ArrayList<>();
+            2. LinkedList:
+                -> LinkedList is another implementation of the List interface, but it also implements Deque (Double Ended Queue).
+                -> Because of this structure, insertion and deletion operations are faster than in ArrayList, especially when done frequently in the middle or beginning of the list.
+                -> However, random access using an index (like get(5)) is slower, since it needs to traverse nodes from the start or end.
+                Syntax: List<data-type> IDs = new LinkedList<>();
+            3. Vector:
+                -> Vector is very similar to ArrayList — it also uses a dynamic array internally.
+                -> However, the main difference is that Vector is synchronized, meaning it is thread-safe. Multiple threads can access a Vector object safely without corrupting data.
+                Syntax: Vector<Integer> v = new Vector<>();
+            4. Stack:
+                -> Stack is a subclass of Vector that follows the LIFO (Last In First Out) principle.
+                -> It’s mainly used when you want to store elements where the last inserted element is removed first, like in undo/redo operations, expression evaluation, or backtracking problems.
+                -> methods such as:
+                    push() → to add elements on top of the stack
+                    pop() → to remove the top element
+                    peek() → to view the top element without removing it
+                    empty() → to check if the stack is empty
+                -> Although Stack is still available, modern Java recommends using ArrayDeque instead for stack behavior because it’s faster and not legacy-based.
+                Syntax: Stack<String> stack = new Stack<>();
+    2. Set Interface
+        -> The Set interface in Java is used to store unique elements — it does not allow duplicates.
+            i.   A set is unordered (order may change).
+            ii.  It can store null (only one null).
+            iii. It has no index, so you can’t access elements using numbers like in a list.
+        -> Types of Set:
+            1. HashSet
+                -> Stores elements in random order (no insertion order).
+                -> Does not allow duplicates.
+                -> Allows one null value.
+                -> Fastest for add, remove, and search.
+                Syntax: HashSet<String> set = new HashSet<>();
+            2. LinkedHashSet
+                -> Similar to HashSet, but keeps elements in insertion order.
+                -> Does not allow duplicates.
+                -> Allows one null value.
+                Syntax: LinkedHashSet<Integer> set = new LinkedHashSet<>();
+            3. TreeSet
+                -> Stores elements in sorted (ascending) order.
+                -> Does not allow duplicates.
+                -> Does not allow null.
+                Syntax: TreeSet<String> set = new TreeSet<>();
+    3. Queue Interface
+        -> The Queue interface in Java is used when you want to store elements in order and process them one by one — usually in FIFO (First In, First Out) order.
+        -> Think of it like a line of people — the first person to enter the line is the first to be served.
+        -> Maintains order (usually FIFO).
+        -> Can have duplicate elements.
+        -> Provides special methods for adding and removing elements.
+        -> Some queues can also work in LIFO order (like stacks) using ArrayDeque.
+        ->Methods:
+            i.   add() → add an element
+            ii.  offer() → add element (returns false if fails)
+            iii. remove() → removes and returns first element
+            iv.  poll() → removes and returns first element, or null if empty
+            v.   peek() → shows first element without removing it
+        -> Implementation of Queue Interface
+            1. LinkedList (also acts as Queue)
+                -> LinkedList implements both List and Queue.
+                -> When used as a Queue, it follows FIFO order — elements are added at the end and removed from the front.
+                Syntax: Queue<String> queue = new LinkedList<>();
+            2. PriorityQueue
+                -> PriorityQueue stores elements based on priority, not in insertion order.
+                -> By default, it arranges elements in natural ascending order (for numbers or strings).
+                -> When you remove elements, the smallest element (highest priority) comes out first.
+                Syntax: PriorityQueue<Integer> pq = new PriorityQueue<>();
+            3. ArrayDeque
+                -> ArrayDeque (Double Ended Queue) allows you to add or remove elements from both ends — front and back.
+                -> It can act as both Queue (FIFO) and Stack (LIFO).
+                -> It’s faster than both LinkedList and Stack.
+                Syntax: ArrayDeque<String> dq = new ArrayDeque<>();
+    4. Map Interface
+        -> The Map interface in Java is used to store data in key–value pairs.
+        -> Each value is stored with a unique key, and you can use that key to quickly get its value.
+        -> It is not a part of the Collection interface hierarchy but still part of the Java Collection Framework (inside java.util package).
+        -> Stores key–value pairs.
+        -> Keys must be unique; values can be duplicate.
+        -> One null key is allowed (depends on implementation).
+        -> No insertion order guaranteed (depends on the class used).
+        -> You can get values quickly using keys (very fast lookup).
+        -> Common methods in Map:
+            * put(key, value) → Adds or replaces a key–value pair.
+            * get(key) → Returns the value of the given key.
+            * remove(key) → Removes the entry for the given key.
+            * containsKey(key) → Checks if a key exists.
+            * containsValue(value) → Checks if a value exists.
+            * keySet() → Returns all keys.
+            * values() → Returns all values.
+            * entrySet() → Returns all key–value pairs.
+        -> Implementation
+            1. HashMap
+                -> HashMap is the most commonly used Map implementation.
+                -> It stores data in random order using a hash table, so the order of elements is not guaranteed.
+                -> It allows one null key and multiple null values.
+                -> It is fast for adding, removing, and searching.
+                -> However, it is not synchronized (not thread-safe).
+                Syntax: HashMap<Integer, String> map = new HashMap<>();
+            2. LinkedHashMap
+                -> LinkedHashMap is similar to HashMap, but it maintains the insertion order of key–value pairs.
+                -> It is a combination of a HashMap and a linked list, so when you print it, elements appear in the same order they were added.
+                -> It also allows one null key and multiple null values.
+                Syntax: LinkedHashMap<Integer, String> map = new LinkedHashMap<>();
+            3. TreeMap
+                -> TreeMap stores elements in sorted order of keys (ascending order by default).
+                -> It is based on a Red-Black Tree structure.
+                -> It does not allow null keys, but allows null values.
+                -> It is slower than HashMap, because it maintains sorting order.
+                Syntax: TreeMap<Integer, String> map = new TreeMap<>();
+3. What is the Collections Class?
+    -> The Collections class is a utility class in Java (found in java.util package).
+    -> It contains static methods that you can use to operate on collections (like lists, sets, maps, etc.).
+    -> Methods:
+        1. sort()
+            -> Used to sort elements of a list in ascending order (natural order).
+            -> For custom sorting, you can pass a Comparator.
+            Ex: Collections.sort(list);
+        2. reverse()
+            -> Reverse the order of elements in a list.
+            Ex: Collections.reverse(list);
+        3. shuffle()
+            -> Rearranges the list elements randomly.
+            Ex: Collections.shuffle(list);
+        4. max() and min()
+            -> Find the largest and smallest elements from a collection.
+            Ex: int max = Collections.max(list);
+                int min = Collections.min(list);
+        5. frequency()
+            -> Counts how many times a specific element appears in a collection.
+            Ex: List<String> names = Arrays.asList("A", "B", "A", "C");
+                int count = Collections.frequency(names, "A");
+        6. swap()
+            -> Swaps two elements in a list using their indexes.
+            Ex: List<String> colors = new ArrayList<>(Arrays.asList("Red", "Blue", "Green"));
+                Collections.swap(colors, 0, 2);
+            o/p: After swap: [Green, Blue, Red]
+        7. fill()
+            -> Replaces all elements in a list with a given value.
+            Ex: Collections.fill(colors, "Black");
+            o/p: After fill: [Black, Black, Black]
+        8.copy()
+            -> Copies elements from one list to another (destination list must be the same size).
+            Ex: List<String> src = Arrays.asList("A", "B", "C");
+                List<String> dest = new ArrayList<>(Arrays.asList("X", "Y", "Z"));
+                Collections.copy(dest, src);
+                System.out.println("After copy: " + dest);
+            o/p: After copy: [A, B, C]
+4. What Are Generics in Java?
+    -> Generics allow you to write type-safe code — meaning you can tell Java what kind of data a collection will hold.
+    -> Without generics, a collection can hold any type of object, which can cause runtime errors.
+    -> With generics, you specify the data type during declaration, so mistakes are caught at compile-time.
+    Syntax: ClassName<Type> objectName = new ClassName<Type>();
+
+

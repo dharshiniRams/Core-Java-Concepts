@@ -1,0 +1,108 @@
+1. What is a Stream in Java?
+    -> A Stream in Java is a sequence of elements (like from a collection, array, etc.) that you can process using functional operations — such as filtering, mapping, sorting, or reducing.
+    -> Think of a stream as a pipeline — data flows through it, and you apply operations to transform or filter it.
+    Syntax: collection.stream()
+                      .intermediateOperation()
+                      .terminalOperation();
+    Syntax Pattern: stream()
+                       .filter(...)
+                       .map(...)
+                       .sorted(...)
+                       .forEach(...);
+    -> You can chain many intermediate operations, but the stream ends only when a terminal operation is used (like forEach, count, collect).
+    Ex: Find only numbers greater than 20, Double them, Print them
+        List<Integer> list = Arrays.asList(10, 20, 30, 40, 50);
+        list.stream()
+            .filter(n-> n>20)
+            .map(n-> n*2)
+            .forEach(System.out::println);
+2. How Stream Work?
+    -> Three Main Steps:
+        * Create a Stream
+            way 1: list.stream(); // from a List
+            way 2: Stream.of(1, 2, 3, 4); // directly
+            way 3: Arrays.stream(array); // from array
+        * Perform Intermediate Operations
+            Common ones:
+                -> .filter() → Filters elements
+                -> .map() → Transforms elements
+                -> .sorted() → Sorts elements
+                -> .distinct() → Removes duplicates
+                -> .limit(n) → Takes first n elements
+                -> .skip(n) → Skips first n elements
+            Ex: Applying
+            import java.util.*;
+            import java.util.stream.*;
+            class Example {
+                public static void main(String[] args) {
+                    List<Integer> numbers = Arrays.asList(10, 20, 20, 30, 40, 50, 60, 70);
+                    numbers.stream()
+                           .filter(n -> n > 20)         // keep only numbers greater than 20
+                           .distinct()                  // remove duplicates
+                           .map(n -> n * 2)             // multiply each by 2
+                           .sorted()                    // sort ascending
+                           .skip(1)                     // skip the first element
+                           .limit(3)                    // take next 3 elements
+                           .forEach(System.out::println); // print them
+                }
+            }
+        * Perform Terminal Operation
+            -> These end the stream and produce a result.
+            -> Common ones:
+                * .forEach() → Iterate and perform an action
+                * .collect() → Convert stream to list, set, etc.
+                * .count() → Count elements
+                * .findFirst() / .findAny() → Get an element
+                * .reduce() → Combine elements to a single value
+            Ex: in practice\StreamTerminal.java file
+3. What is a Parallel Stream?
+    -> Normally, a stream runs sequentially — one element is processed at a time using a single thread.
+    -> A parallel stream, on the other hand, splits the data into multiple parts and processes them simultaneously using multiple threads (through the ForkJoinPool).
+    -> The name comes from the way it works:
+           * Fork → split a big task into smaller subtasks.
+           * Join → combine (join) the results of those subtasks when they’re done.
+    -> So it divides and conquers — that’s the main idea.
+    Ex: sequential vs Parallel are in practice\streamdiff.java
+4. How to create a Parallel Stream?
+    -> There are two ways:
+        -> From a Collection:
+            list.parallelStream();
+        -> From a normal Stream:
+            list.stream().parallel();
+    -> Both are same.
+5. When to use Parallel Stream?
+    -> Use when:
+        * The data set is large (thousands of elements).
+        * Each operation is independent (no shared data).
+        * CPU-intensive operations (e.g. calculations, transformations).
+    -> Avoid when:
+        * Order matters (parallel may not preserve order).
+        * Small data sets (overhead of threads is costly).
+        * You modify shared resources (can cause race conditions).
+    Ex: to understand the usage see practice\ParallelStreams.java
+    -> we can use forEachOrdered();
+    -> we can combine with collectors
+6. What is Collectors?
+    -> Collectors are used with .collect() to convert a stream back into a collection.
+    -> toList() → collects stream elements into a List (keeps duplicates and order).
+    -> toSet() → collects elements into a Set (removes duplicates).
+    -> toMap(keyFn, valueFn) → collects elements into a Map using key and value functions.
+    -> These are terminal operations — they end the stream.
+7. What is groupingBy()?
+    -> Used to group elements based on a property or condition.
+    -> Returns a Map<key, List<values>>.
+    -> Example use: group students by department, or words by length.
+    -> It’s a collector, so used with .collect().
+8. What is PartitionBy()?
+    -> Splits elements into two groups — one where the condition is true, and one where it’s false.
+    -> Returns a Map<Boolean, List<values>>.
+    -> Common use: divide data into even/odd, pass/fail, active/inactive, etc.
+9. What is Joining()?
+    -> Combines all stream elements (Strings) into one single string.
+    -> You can add a delimiter, prefix, and suffix.
+    -> Example: joining names with commas — useful for display or reports.
+10. What are Primitive Streams?
+    -> Specialized streams for primitive types → IntStream, LongStream, DoubleStream.
+    -> Faster and memory-efficient because they avoid auto-boxing.
+    -> Provide numeric methods like sum(), average(), max(), min().
+    -> Often used for numeric calculations or performance-critical code.

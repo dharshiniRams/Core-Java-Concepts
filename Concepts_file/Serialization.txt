@@ -1,0 +1,39 @@
+Serialization is the process of converting an object into a byte stream, so it can be saved to a file, sent over a network, or stored in a database.
+Deserialization is the reverse process — converting the byte stream back into an object.
+Normally, Java objects exist only in memory (RAM). If the program stops, the data is lost. Serialization lets us save the object’s data and reuse it later.
+Example
+import java.io.*;
+class Student implements Serializable {
+    int id;
+    String name;
+
+    Student(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+}
+Serialization (Saving object to file)
+Student s1 = new Student(101, "Dharshini");
+FileOutputStream fos = new FileOutputStream("student.ser");
+ObjectOutputStream oos = new ObjectOutputStream(fos);
+oos.writeObject(s1);
+oos.close();
+fos.close();
+System.out.println("Object serialized!");
+Deserialization (Reading object from file)
+FileInputStream fis = new FileInputStream("student.ser");
+ObjectInputStream ois = new ObjectInputStream(fis);
+Student s = (Student) ois.readObject();
+ois.close();
+fis.close();
+System.out.println("ID: " + s.id);
+System.out.println("Name: " + s.name);
+Output:
+ID: 101
+Name: Dharshini
+transient Keyword: If you don’t want a variable to be saved during serialization, mark it as transient:
+transient String password; 
+(This field will be skipped and become null when deserialized.)
+serialVersionUID: Used to maintain version control of a serialized class.
+private static final long serialVersionUID = 1L;
+(If the class changes later, this ID ensures deserialization still works.)

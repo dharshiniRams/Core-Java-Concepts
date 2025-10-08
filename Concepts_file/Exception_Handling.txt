@@ -1,0 +1,41 @@
+Exception Handling is a way to handle runtime errors in Java — so the program doesn’t crash and can continue executing smoothly. We use try–catch–finally blocks for this.
+Example:
+try {
+    int a = 10 / 0;   // ❌ ArithmeticException
+} catch (ArithmeticException e) {
+    System.out.println("Cannot divide by zero!");
+} finally {
+    System.out.println("Finally block always runs!");
+}
+Multiple Catch Blocks: Used when different exceptions might occur.
+try {
+    int[] arr = new int[3];
+    arr[5] = 10;  // ArrayIndexOutOfBoundsException
+} catch (ArithmeticException e) {
+    System.out.println("Math error");
+} catch (ArrayIndexOutOfBoundsException e) {
+    System.out.println("Array index error");
+} catch (Exception e) {
+    System.out.println("Other exception");
+}
+Always keep specific exceptions before the general Exception class.
+throw Keyword: Used to manually throw an exception.
+throw new ArithmeticException("Invalid operation");
+throws Keyword: Used in method declaration to say that the method might throw an exception.
+void readFile() throws IOException {
+    // code that may cause IOException
+}
+Custom Exception: You can create your own exception class by extending Exception or RuntimeException.
+class MyException extends Exception {
+    MyException(String msg) {super(msg);}
+}
+public class Demo {
+    public static void main(String[] args) {
+        try {
+            throw new MyException("Custom error message!");
+        } catch (MyException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}
+Some of the common exceptions in Java are ArithmeticException (when dividing by zero), NullPointerException (when trying to access a null object), ArrayIndexOutOfBoundsException (when using an invalid array index), and NumberFormatException (when converting a string to a number fails). There are also checked exceptions like IOException (for input/output errors) and FileNotFoundException (when a file is missing).
